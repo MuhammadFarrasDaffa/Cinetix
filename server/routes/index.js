@@ -1,19 +1,20 @@
-const express = require("express");
-const router = express.Router();
+const express = require('express')
+const router = express.Router()
 
-const profileRoutes = require("./ProfilesRoute");
-const watchlistRoutes = require("./WatchlistRoute");
-const userController = require("../controllers/UserController");
-const errorHandler = require("../middleware/errorHandler");
+const WatchlistRoute = require('./WatchlistRoute')
+const ProfilesRoute = require('./ProfilesRoute')
+const MovieRoute = require('./MovieRoute')
 
-router.post("/login", userController.login);
-router.post("/register", userController.register);
+const userController = require('../controllers/UserController')
+const errorHandler = require('../middleware/errorHandler')
 
-router.use("/profiles", profileRoutes);
+router.post('/register', userController.register)
+router.post('/login', userController.login)
 
-router.use("/watchlists", watchlistRoutes);
+router.use('/watchlists', WatchlistRoute)
+router.use('/profiles', ProfilesRoute)
+router.use('/movies', MovieRoute)
 
 router.use(errorHandler)
 
-module.exports = router;
-
+module.exports = router
