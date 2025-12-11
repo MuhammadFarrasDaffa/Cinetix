@@ -1,13 +1,17 @@
 import { useState, useEffect } from "react";
 import { http } from "../helpers/http-client";
 import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecommendations as fetchRecommendationsThunk } from "../store/recommendationsSlice";
 
 export default function ProfilePage() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { items: recs, loading: loadingRecs } = useSelector(
+    (state) => state.recommendations
+  );
   const [user, setUser] = useState(null);
   const [editOpen, setEditOpen] = useState(false);
-  const [recs, setRecs] = useState([]);
-  const [loadingRecs, setLoadingRecs] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
 
   const [form, setForm] = useState({
@@ -103,30 +107,18 @@ export default function ProfilePage() {
 
   async function fetchRecommendations() {
     try {
-      if (!user.age || user.preferences.length === 0) {
+      if (
+        !user?.age ||
+        (Array.isArray(user?.preferences)
+          ? user.preferences.length === 0
+          : false)
+      ) {
         throw { message: "Input age and preferences genres first!" };
       }
-
-      setLoadingRecs(true);
-
-      const { data } = await http({
-        method: "GET",
-        url: "/movies/recommendations",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
-
-      setRecs(data);
+      dispatch(fetchRecommendationsThunk());
     } catch (err) {
       console.log(err);
-      window.Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: err.message,
-      });
-    } finally {
-      setLoadingRecs(false);
+      window.Swal.fire({ icon: "error", title: "Oops...", text: err.message });
     }
   }
 

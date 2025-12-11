@@ -7,11 +7,10 @@
     <link href="/client/src/index.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://accounts.google.com/gsi/client" async></script>
-    <script
-      type="text/javascript"
-      src="https://app.sandbox.midtrans.com/snap/snap.js"
-      data-client-key="Mid-client-1Gb6wq5AKizFoeNX"
-    ></script>
+    <script src="https://app.sandbox.midtrans.com/snap/snap.js"></script>
+    <script>
+      window.snap.setClientKey(import.meta.env.VITE_MIDTRANS_CLIENT_KEY);
+    </script>
 
     <title>Cinetix</title>
   </head>

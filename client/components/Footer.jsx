@@ -5,11 +5,9 @@ export default function Footer() {
       style={{ backgroundColor: "#F0EDEE", color: "#2C666E" }}
     >
       <p className="font-medium">
-        © {new Date().getFullYear()} MyApp. All rights reserved.
+        © {new Date().getFullYear()} Cinetix - Muhammad Farras Daffa
       </p>
-      <p className="text-xs mt-1">
-        Designed with theme colors #2C666E & #F0EDEE
-      </p>
+      <p className="text-xs mt-1">Individual Project - Hacktiv8</p>
     </footer>
   );
 }

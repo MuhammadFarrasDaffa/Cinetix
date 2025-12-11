@@ -19,7 +19,7 @@ export default function Navbar() {
     >
       {/* Brand */}
       <Link to="/" className="text-white font-semibold text-lg">
-        MyApp
+        C i n e t i x
       </Link>
 
       {/* Navigation Links */}
@@ -32,6 +32,12 @@ export default function Navbar() {
         </Link>
         <Link to="/my-watchlist" className="hover:opacity-80 transition">
           Watchlist
+        </Link>
+        <Link to="/my-collection" className="hover:opacity-80 transition">
+          Collection
+        </Link>
+        <Link to="/my-payments" className="hover:opacity-80 transition">
+          Transactions
         </Link>
 
         {/* Logout */}

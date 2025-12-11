@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <div>
       <h1 className="text-3xl font-bold text-center text-[#2C666E] mt-10 mb-10">
-        Selamat Datang di Halaman Utama!
+        Welcome to Cinetix!
       </h1>
 
       <div
