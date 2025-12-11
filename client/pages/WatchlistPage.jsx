@@ -56,7 +56,7 @@ export default function WatchlistPage() {
       </h1>
 
       {/* Empty State */}
-      {!loading && !watchlist && (
+      {!loading && watchlist.length === 0 && (
         <div className="text-center mt-20">
           <h2 className="text-xl text-[#2C666E] font-semibold">
             Kamu belum menambahkan film apapun

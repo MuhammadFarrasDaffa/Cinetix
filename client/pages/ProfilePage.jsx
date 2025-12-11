@@ -8,6 +8,7 @@ export default function ProfilePage() {
   const [editOpen, setEditOpen] = useState(false);
   const [recs, setRecs] = useState([]);
   const [loadingRecs, setLoadingRecs] = useState(false);
+  const [uploadLoading, setUploadLoading] = useState(false);
 
   const [form, setForm] = useState({
     username: "",
@@ -51,6 +52,52 @@ export default function ProfilePage() {
       });
     } catch (err) {
       console.log(err);
+    }
+  }
+
+  async function handleUploadImage(e) {
+    setUploadLoading(true);
+    try {
+      const file = e.target.files[0];
+
+      // Validasi file exist
+      if (!file) {
+        throw new Error("No file selected");
+      }
+
+      // Validasi file type
+      if (!file.type.startsWith("image/")) {
+        throw new Error("Please select an image file");
+      }
+
+      const formData = new FormData();
+      formData.append("newImage", file);
+
+      // Update profile image
+      // PENTING: jangan set Content-Type header - axios akan handle otomatis untuk FormData
+      const { data } = await http.patch(`/profiles/update-image`, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      // Success notification
+      window.Swal.fire({
+        icon: "success",
+        title: "Success",
+        text: data.message || "Image uploaded successfully",
+      });
+
+      fetchProfile();
+    } catch (err) {
+      console.error("Upload error:", err);
+      window.Swal.fire({
+        icon: "error",
+        title: "Upload Failed",
+        text: err.message || "Failed to upload image",
+      });
+    } finally {
+      setUploadLoading(false);
     }
   }
 
@@ -123,17 +170,37 @@ export default function ProfilePage() {
       <div className="max-w-3xl w-full bg-white/25 backdrop-blur-xl rounded-3xl shadow-xl p-10 border border-white/40">
         {/* Top Section */}
         <div className="flex items-center gap-6">
-          <div className="relative group">
+          <div className="relative group w-32 h-32">
+            {/* Profile Image */}
             <img
-              src={
-                user.imageUrl ||
-                "https://ui-avatars.com/api/?name=" + user.username
-              }
+              src={user.imageUrl}
               alt="profile"
               className="w-32 h-32 object-cover rounded-full shadow-lg border-4 border-white/50"
             />
-          </div>
 
+            {/* Hover Overlay */}
+            <div
+              className="
+      absolute inset-0 rounded-full bg-black/50 opacity-0 
+      group-hover:opacity-100 transition flex items-center justify-center
+      cursor-pointer
+    "
+              onClick={() => document.getElementById("uploadProfile").click()}
+            >
+              <span className="text-white text-sm font-medium">
+                {uploadLoading ? "Uploading..." : "Change Photo"}
+              </span>
+            </div>
+
+            {/* Hidden File Input */}
+            <input
+              id="uploadProfile"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleUploadImage}
+            />
+          </div>
           {/* Information */}
           <div>
             <h1 className="text-3xl font-bold text-white drop-shadow-lg">

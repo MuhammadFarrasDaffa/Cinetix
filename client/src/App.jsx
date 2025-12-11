@@ -7,7 +7,6 @@ import HomePage from "../pages/HomePage";
 import WatchlistPage from "../pages/WatchlistPage";
 import MovieDetailPage from "../pages/DetailPage";
 import ProfilePage from "../pages/ProfilePage";
-import CheckoutPage from "../pages/CheckoutPage";
 
 function App() {
   return (
@@ -20,7 +19,6 @@ function App() {
           <Route path="/my-watchlist" element={<WatchlistPage />} />
           <Route path="/my-profile" element={<ProfilePage />} />
           <Route path="/movies/:id" element={<MovieDetailPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
