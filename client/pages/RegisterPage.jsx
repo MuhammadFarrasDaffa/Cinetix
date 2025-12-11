@@ -16,12 +16,12 @@ export default function RegisterPage() {
 
   function validate() {
     const re = /^\S+@\S+\.\S+$/;
-    if (!email) return "Email wajib diisi.";
-    if (!re.test(email)) return "Masukkan email yang valid.";
+    if (!email) return "Email is required.";
+    if (!re.test(email)) return "Please enter a valid email address.";
 
-    if (!password) return "Password wajib diisi.";
-    if (password.length < 6) return "Password minimal 6 karakter.";
-    if (password !== confirm) return "Konfirmasi password tidak cocok.";
+    if (!password) return "Password is required.";
+    if (password.length < 6) return "Password must be at least 6 characters.";
+    if (password !== confirm) return "Password confirmation does not match.";
 
     return "";
   }
@@ -40,7 +40,9 @@ export default function RegisterPage() {
       navigate("/login");
     } catch (err) {
       console.log(err);
-      setError(err?.response?.data?.message || "Gagal login. Coba lagi.");
+      setError(
+        err?.response?.data?.message || "Failed to register. Please try again."
+      );
     } finally {
       setLoading(false);
     }
@@ -56,7 +58,7 @@ export default function RegisterPage() {
       <div className="max-w-md w-full bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8">
         <header className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-[#2C666E]">
-            Buat Akun Baru
+            Create a New Account
           </h1>
         </header>
 
@@ -102,7 +104,7 @@ export default function RegisterPage() {
               htmlFor="confirm"
               className="text-sm font-medium text-gray-700"
             >
-              Konfirmasi Password
+              Confirm Password
             </label>
             <input
               id="confirm"
@@ -119,7 +121,7 @@ export default function RegisterPage() {
             onClick={() => setShowPassword((v) => !v)}
             className="text-xs text-[#2C666E] hover:underline"
           >
-            {showPassword ? "Sembunyikan password" : "Tampilkan password"}
+            {showPassword ? "Hide password" : "Show password"}
           </button>
 
           {error && <p className="text-sm text-red-600">{error}</p>}
@@ -134,12 +136,12 @@ export default function RegisterPage() {
         </form>
 
         <footer className="text-center mt-6 text-sm text-gray-600">
-          Sudah punya akun?{" "}
+          Already have an account?{" "}
           <Link
             to={"/login"}
             className="text-[#2C666E] hover:underline font-medium"
           >
-            Masuk
+            Login
           </Link>
         </footer>
       </div>

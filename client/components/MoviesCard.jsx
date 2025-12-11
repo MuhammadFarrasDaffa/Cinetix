@@ -23,8 +23,6 @@ export default function MovieCard({ movie }) {
           },
         });
 
-        console.log(data, "<<< data");
-
         setIsWatchlist(data.isWatchlist);
       } catch (error) {
         console.log("🚀 ~ checkWatchlistStatus ~ error:", error);

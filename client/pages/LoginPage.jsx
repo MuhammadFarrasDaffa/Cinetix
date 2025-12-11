@@ -13,12 +13,13 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   function validate() {
-    if (!email) return "Email tidak boleh kosong.";
+    if (!email) return "Email cannot be empty.";
+
     // simple email regex
     const re = /^\S+@\S+\.\S+$/;
-    if (!re.test(email)) return "Masukkan alamat email yang valid.";
-    if (!password) return "Password tidak boleh kosong.";
-    if (password.length < 6) return "Password minimal 6 karakter.";
+    if (!re.test(email)) return "Please enter a valid email address.";
+    if (!password) return "Password cannot be empty.";
+    if (password.length < 8) return "Password must be at least 8 characters.";
     return "";
   }
 
@@ -87,7 +88,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8">
         <header className="mb-6 text-center">
           <h1 className="text-2xl font-semibold text-[#2C666E]">
-            Masuk ke Akun Anda
+            Login to your account
           </h1>
         </header>
 
@@ -136,9 +137,7 @@ export default function LoginPage() {
                 type="button"
                 onClick={() => setShowPassword((s) => !s)}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-xs px-2 py-1 rounded-md bg-gray/60 hover:bg-gray"
-                aria-label={
-                  showPassword ? "Sembunyikan password" : "Tampilkan password"
-                }
+                aria-label={showPassword ? "Hide Password" : "Show assword"}
               >
                 {showPassword ? "Hide" : "Show"}
               </button>
@@ -162,12 +161,12 @@ export default function LoginPage() {
 
         <footer className="mt-6 text-center text-sm text-gray-600">
           <p>
-            Belum punya akun?{" "}
+            Dont have an account yet?{" "}
             <Link
               to={"/register"}
               className="text-[#2C666E] font-medium hover:underline"
             >
-              Daftar sekarang
+              Register
             </Link>
           </p>
         </footer>

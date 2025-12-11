@@ -1,5 +1,5 @@
 const midtransClient = require("midtrans-client");
-const { Payment, Movie } = require("../models");
+const { Payment, Collection } = require("../models");
 
 module.exports = class Controller {
     static async createTransaction(req, res, next) {
@@ -7,7 +7,19 @@ module.exports = class Controller {
             const { movieId, title, price } = req.body;
 
             if (!movieId || !title || !price) {
-                throw { name: "BadRequest", message: "movieId, title, and price are required" };
+                throw { name: "Bad Request", message: "movieId, title, and price are required" };
+            }
+
+            // Cek apakah movie sudah ada di collection user
+            const existingCollection = await Collection.findOne({
+                where: {
+                    UserId: req.user.id,
+                    MovieId: movieId,
+                },
+            });
+
+            if (existingCollection) {
+                throw { name: "Bad Request", message: "You already own this movie" };
             }
 
             // Buat Snap client
@@ -18,14 +30,8 @@ module.exports = class Controller {
 
             const orderId = "ORDER-" + Date.now() + "-" + req.user.id;
 
-            // Pastikan movie ada di database (hindari foreign key violation)
-            const movieRecord = await Movie.findByPk(movieId);
-            if (!movieRecord) {
-                throw { name: "NotFound", message: "Movie not found" };
-            }
-
-            // Ambil harga dari movie jika tidak diberikan
-            const amount = price || movieRecord.price || 0;
+            // Ambil harga dari request
+            const amount = price;
 
             const parameter = {
                 transaction_details: {
@@ -48,7 +54,7 @@ module.exports = class Controller {
 
             const transaction = await snap.createTransaction(parameter);
 
-            // Simpan payment record ke database
+            // Simpan payment dengan status pending
             await Payment.create({
                 OrderId: orderId,
                 UserId: req.user.id,
@@ -56,6 +62,11 @@ module.exports = class Controller {
                 amount: amount,
                 status: "pending",
                 transactionDetails: JSON.stringify(transaction),
+            });
+
+            await Collection.create({
+                UserId: req.user.id,
+                MovieId: movieId,
             });
 
             res.status(201).json({
@@ -72,30 +83,29 @@ module.exports = class Controller {
     static async handleNotification(req, res, next) {
         try {
             const notification = req.body;
+            console.log(notification, "<<< notification");
+
+
             const coreApi = new midtransClient.CoreApi({
                 isProduction: false,
                 serverKey: process.env.MIDTRANS_SERVER_KEY,
             });
 
             const transactionStatus = await coreApi.transaction.notification(notification);
+            console.log(transactionStatus, "<<<< transaction status");
+
             const orderId = transactionStatus.order_id;
             const paymentStatus = transactionStatus.transaction_status;
 
-            // Update payment status di database
+            console.log("[Midtrans Webhook]", { orderId, paymentStatus });
+
+            // Update status pembayaran berdasarkan webhook Midtrans
             await Payment.update(
                 { status: paymentStatus },
-                { where: { "OrderId": orderId } }
+                { where: { OrderId: orderId } }
             );
 
-            if (paymentStatus === "settlement") {
-                console.log(`✅ Payment success for order ${orderId}`);
-            } else if (paymentStatus === "deny") {
-                console.log(`❌ Payment denied for order ${orderId}`);
-            } else if (paymentStatus === "expire") {
-                console.log(`⏱ Payment expired for order ${orderId}`);
-            }
-
-            res.status(200).json({ status: "OK" });
+            res.status(200).json({ status: "OK", orderId, paymentStatus });
         } catch (err) {
             console.log("🚀 ~ handleNotification ~ err:", err);
             res.status(500).json({ message: "Error processing webhook" });
