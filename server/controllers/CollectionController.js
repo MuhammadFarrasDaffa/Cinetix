@@ -1,4 +1,4 @@
-const { Collection } = require("../models");
+const { Collection, Movie, User } = require("../models");
 
 module.exports = class Controller {
     static async getCollections(req, res, next) {
@@ -6,6 +6,7 @@ module.exports = class Controller {
             const userId = req.user.id
 
             const collections = await Collection.findAll({
+                include: [Movie, User],
                 where: { UserId: userId },
             })
 

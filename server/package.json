@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "db:prepare": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all",
+    "db:prepare:test": "npx sequelize-cli db:drop --env test && npx sequelize-cli db:create --env test && npx sequelize-cli db:migrate --env test",
     "dev": "npx nodemon bin/www",
-    "test": "jest --detectOpenHandles --forceExit"
+    "test": "jest --detectOpenHandles --forceExit",
+    "test:coverage": "jest --coverage --detectOpenHandles --forceExit"
   },
   "keywords": [],
   "author": "",

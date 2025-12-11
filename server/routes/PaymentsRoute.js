@@ -10,6 +10,7 @@ router.post("/webhook", (req, res, next) => {
 
 // Protected routes (require authentication)
 router.use(authentication);
+router.get("/", paymentController.getPayments);
 router.post("/create", paymentController.createTransaction);
 
 module.exports = router;

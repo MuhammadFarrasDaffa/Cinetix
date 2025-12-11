@@ -1,5 +1,5 @@
 const midtransClient = require("midtrans-client");
-const { Payment, Collection } = require("../models");
+const { Payment, Collection, Movie } = require("../models");
 
 module.exports = class Controller {
     static async createTransaction(req, res, next) {
@@ -109,6 +109,17 @@ module.exports = class Controller {
         } catch (err) {
             console.log("🚀 ~ handleNotification ~ err:", err);
             res.status(500).json({ message: "Error processing webhook" });
+        }
+    }
+
+    static async getPayments(req, res, next) {
+        try {
+            const userId = req.user.id;
+            const payments = await Payment.findAll({ include: [Movie], where: { UserId: userId } });
+            res.status(200).json(payments);
+        } catch (err) {
+            console.log("🚀 ~ getPayments ~ err:", err);
+            next(err);
         }
     }
 }

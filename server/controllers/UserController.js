@@ -66,7 +66,7 @@ module.exports = class Controller {
             // catch token from req body
             const { google_token } = req.body;
             if (!google_token) {
-                throw { name: 'BadRequest', message: 'Google token is required' };
+                throw { name: 'Bad Request', message: 'Google token is required' };
             }
 
             const client = new OAuth2Client();
