@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { http } from "../helpers/http-client";
 
 const recommendationsSlice = createSlice({
     name: "recommendations",
@@ -40,9 +40,9 @@ export function fetchRecommendations() {
     return async function thunk(dispatch) {
         try {
             dispatch(recommendationsActions.fetchStart());
-            const { data } = await axios({
+            const { data } = await http({
                 method: "GET",
-                url: `http://localhost:3000/movies/recommendations`,
+                url: `/movies/recommendations`,
                 headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
             });
             dispatch(recommendationsActions.setRecommendations(data));
