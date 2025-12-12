@@ -37,7 +37,7 @@ export default function PaymentsPage() {
           My Transactions
         </h1>
         <p className="text-gray-600 mt-2">
-          Daftar transaksi pembelian film kamu.
+          List of your movie purchase transactions.
         </p>
       </div>
 
@@ -45,17 +45,19 @@ export default function PaymentsPage() {
         <div className="flex justify-center items-center min-h-64">
           <div className="flex flex-col items-center gap-3">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#2C666E]"></div>
-            <p className="text-[#2C666E] font-medium">Loading transaksi...</p>
+            <p className="text-[#2C666E] font-medium">
+              Loading transactions...
+            </p>
           </div>
         </div>
       ) : payments.length === 0 ? (
         <div className="flex flex-col items-center justify-center min-h-64 bg-white rounded-2xl shadow-md border border-[#2C666E]/10">
           <FaMoneyBillWave className="text-6xl text-[#2C666E]/30 mb-4" />
           <h2 className="text-2xl text-[#2C666E] font-bold mb-2">
-            Belum ada transaksi
+            No transactions yet
           </h2>
           <p className="text-gray-600 text-center max-w-md">
-            Kamu belum melakukan pembelian film.
+            You have not made any movie purchases yet.
           </p>
         </div>
       ) : (

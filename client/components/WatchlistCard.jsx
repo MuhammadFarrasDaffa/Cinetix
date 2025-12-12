@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 export default function WatchlistMovieCard({ movie, onRemove }) {
   // Format duration (ex: 139 → 2 Hours 19 Minutes)
   function formatDuration(mins) {
@@ -35,6 +37,7 @@ export default function WatchlistMovieCard({ movie, onRemove }) {
         border border-white/20
         shadow-lg hover:shadow-2xl
         hover:-translate-y-1 transition-all duration-300
+        cursor-pointer
       "
     >
       {/* Left Image */}
@@ -132,16 +135,27 @@ export default function WatchlistMovieCard({ movie, onRemove }) {
             <span className="text-sm font-semibold">{film.rating}</span>
           </div>
 
-          {/* Remove Button */}
-          <button
-            onClick={() => onRemove?.(film.id)}
-            className="
-              text-sm px-4 py-2 rounded-lg bg-red-500/20 text-red-600 
-              hover:bg-red-600 hover:text-white transition-all duration-200
-            "
-          >
-            Remove
-          </button>
+          {/* Actions */}
+          <div className="flex items-center gap-3">
+            <Link
+              to={`/movies/${film.id}`}
+              className="
+                text-sm px-4 py-2 rounded-lg border border-[#2C666E]/30 text-[#2C666E]
+                bg-white hover:bg-[#2C666E] hover:text-white transition-all duration-200
+              "
+            >
+              Detail
+            </Link>
+            <button
+              onClick={() => onRemove?.(film.id)}
+              className="
+                text-sm px-4 py-2 rounded-lg bg-red-500/20 text-red-600 
+                hover:bg-red-600 hover:text-white transition-all duration-200
+              "
+            >
+              Remove
+            </button>
+          </div>
         </div>
       </div>
     </div>

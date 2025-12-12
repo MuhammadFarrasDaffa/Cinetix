@@ -28,7 +28,7 @@ export default function Navbar() {
           Home
         </Link>
         <Link to="/my-profile" className="hover:opacity-80 transition">
-          My Profile
+          Profile
         </Link>
         <Link to="/my-watchlist" className="hover:opacity-80 transition">
           Watchlist

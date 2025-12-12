@@ -13,26 +13,30 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div>
-      <h1 className="text-3xl font-bold text-center text-[#2C666E] mt-10 mb-10">
-        Welcome to Cinetix!
-      </h1>
-
-      <div
-        className="min-h-screen px-6 py-10 rounded-2xl"
-        style={{ background: "#d7e3e4ff" }}
-      >
-        <h1
-          className="text-3xl text-center font-bold mb-6"
-          style={{ color: "#2c666e" }}
-        >
-          Movies
+    <div className="min-h-screen" style={{ background: "#F0EDEE" }}>
+      <div className="px-6 py-10">
+        <h1 className="text-3xl font-bold text-center text-[#2C666E] drop-shadow mt-6 mb-10">
+          Welcome to Cinetix!
         </h1>
 
-        <div className="grid grid-cols-5 gap-4">
-          {movies.map((movie) => {
-            return <MovieCard key={movie.id} movie={movie} />;
-          })}
+        <div
+          className="bg-white rounded-2xl shadow-xl border"
+          style={{ borderColor: "rgba(44,102,110,0.1)" }}
+        >
+          <div className="px-6 py-6">
+            <h1
+              className="text-3xl text-center font-bold mb-6"
+              style={{ color: "#2C666E" }}
+            >
+              Movies
+            </h1>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+              {movies.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

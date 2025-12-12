@@ -156,10 +156,13 @@ export default function ProfilePage() {
 
   return (
     <div
-      className="min-h-screen px-6 py-10 flex justify-center rounded-3xl"
-      style={{ background: "linear-gradient(135deg, #8ab9bfff, #2c666eff)" }}
+      className="min-h-screen px-6 py-10 flex justify-center"
+      style={{ background: "#F0EDEE" }}
     >
-      <div className="max-w-3xl w-full bg-white/25 backdrop-blur-xl rounded-3xl shadow-xl p-10 border border-white/40">
+      <div
+        className="max-w-3xl w-full bg-white rounded-3xl shadow-xl p-10 border"
+        style={{ borderColor: "rgba(44,102,110,0.1)" }}
+      >
         {/* Top Section */}
         <div className="flex items-center gap-6">
           <div className="relative group w-32 h-32">
@@ -195,17 +198,17 @@ export default function ProfilePage() {
           </div>
           {/* Information */}
           <div>
-            <h1 className="text-3xl font-bold text-white drop-shadow-lg">
+            <h1 className="text-3xl font-bold text-[#2C666E]">
               {user.username}
             </h1>
-            <p className="text-white/90 mt-1 text-sm">{user.age} years old</p>
+            <p className="text-gray-700 mt-1 text-sm">{user.age} years old</p>
 
             <button
               onClick={() => setEditOpen(true)}
               className="
-                mt-4 px-5 py-2 bg-white/30 backdrop-blur-md
+                mt-4 px-5 py-2 bg-[#2C666E]/10
                 text-[#2C666E] font-semibold rounded-xl
-                hover:bg-white/50 transition shadow
+                hover:bg-[#2C666E]/20 transition shadow
               "
             >
               Edit Profile
@@ -215,7 +218,7 @@ export default function ProfilePage() {
 
         {/* Genre List */}
         <div className="mt-10">
-          <h2 className="text-xl font-semibold text-white mb-3">
+          <h2 className="text-xl font-semibold text-[#2C666E] mb-3">
             Favorite Genres
           </h2>
 
@@ -223,7 +226,7 @@ export default function ProfilePage() {
             {user.preferences?.map((p) => (
               <span
                 key={p}
-                className="px-3 py-1 bg-[#2C666E]/20 text-white rounded-full text-xs shadow"
+                className="px-3 py-1 bg-[#2C666E]/15 text-[#2C666E] rounded-full text-xs shadow"
               >
                 {p}
               </span>
@@ -234,16 +237,16 @@ export default function ProfilePage() {
         {/* Recommendations */}
         <div className="mt-12">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-white">
+            <h2 className="text-xl font-semibold text-[#2C666E]">
               Recommended For You
             </h2>
 
             <button
               onClick={fetchRecommendations}
               className="
-        px-4 py-2 bg-white/30 backdrop-blur-md
-        text-white text-sm rounded-xl
-        hover:bg-white/50 shadow transition
+        px-4 py-2 bg-[#2C666E]/10
+        text-[#2C666E] text-sm rounded-xl
+        hover:bg-[#2C666E]/20 shadow transition
       "
             >
               Get Recommendations
@@ -253,20 +256,19 @@ export default function ProfilePage() {
           {/* Loading animation */}
           {loadingRecs && (
             <div className="mt-6 space-y-4">
-              <p className="text-center text-xl font-semibold text-white">
+              <p className="text-center text-xl font-semibold text-[#2C666E]">
                 Loading...
               </p>
-              ;
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
                   className="
           w-full h-40 rounded-2xl relative overflow-hidden
-          bg-white/20 border border-white/30 shadow
+          bg-white border shadow
         "
                 >
                   {/* Shimmer effect */}
-                  <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-white/40 to-transparent"></div>
+                  <div className="absolute inset-0 animate-pulse bg-gradient-to-r from-transparent via-gray-200 to-transparent"></div>
                 </div>
               ))}
             </div>
@@ -274,15 +276,15 @@ export default function ProfilePage() {
 
           {/* Recommendation Results */}
           {!loadingRecs && recs.length > 0 && (
-            <div className="mt-6 space-y-6 animate-fadeIn">
+            <div className="mt-6 space-y-6">
               {recs.map((m, i) => (
                 <div
                   key={i}
                   onClick={() => navigate(`/movies/${m.id}`)}
                   className="
-                flex gap-4 bg-white/20 backdrop-blur-xl p-4
-                rounded-2xl shadow-lg border border-white/30
-                hover:shadow-xl hover:-translate-y-1 transition
+                flex gap-4 bg-white p-4
+                rounded-2xl shadow-lg border
+                hover:shadow-xl hover:-translate-y-1 transition cursor-pointer
                  "
                 >
                   {/* Image */}
@@ -295,15 +297,15 @@ export default function ProfilePage() {
                   {/* Text Content */}
                   <div className="flex flex-col flex-1">
                     <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-bold text-white">
+                      <h3 className="text-lg font-bold text-[#2C666E]">
                         {m.title}
                       </h3>
-                      <span className="text-yellow-300 text-sm font-semibold">
+                      <span className="text-yellow-600 text-sm font-semibold">
                         ⭐ {m.rating}
                       </span>
                     </div>
 
-                    <p className="text-white/80 text-xs mt-1">{m.year}</p>
+                    <p className="text-gray-600 text-xs mt-1">{m.year}</p>
 
                     {/* Genres */}
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -311,8 +313,8 @@ export default function ProfilePage() {
                         <span
                           key={g}
                           className="
-                  px-2 py-1 bg-[#2C666E]/30 text-white text-xs
-                  rounded-lg border border-white/20 shadow
+                  px-2 py-1 bg-[#2C666E]/15 text-[#2C666E] text-xs
+                  rounded-lg border shadow
                 "
                         >
                           {g}
@@ -321,12 +323,12 @@ export default function ProfilePage() {
                     </div>
 
                     {/* Description */}
-                    <p className="text-white/80 text-sm mt-2 line-clamp-2">
+                    <p className="text-gray-700 text-sm mt-2 line-clamp-2">
                       {m.description}
                     </p>
 
                     {/* Reason */}
-                    <p className="text-white/70 text-xs mt-3 italic">
+                    <p className="text-gray-600 text-xs mt-3 italic">
                       {m.reason}
                     </p>
                   </div>

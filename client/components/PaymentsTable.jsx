@@ -46,19 +46,19 @@ export default function PaymentsTable({ payments }) {
                 Order ID
               </th>
               <th className="px-4 py-3 text-left text-[#2C666E] font-semibold">
-                Film
+                Movie
               </th>
               <th className="px-4 py-3 text-left text-[#2C666E] font-semibold">
-                Harga
+                Price
               </th>
               <th className="px-4 py-3 text-left text-[#2C666E] font-semibold">
                 Status
               </th>
               <th className="px-4 py-3 text-left text-[#2C666E] font-semibold">
-                Tanggal
+                Date
               </th>
               <th className="px-4 py-3 text-left text-[#2C666E] font-semibold">
-                Aksi
+                Action
               </th>
             </tr>
           </thead>

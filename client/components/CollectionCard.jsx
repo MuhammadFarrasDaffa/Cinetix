@@ -17,14 +17,14 @@ export default function CollectionCard({ collection, onRefresh }) {
 
   const handleDelete = async () => {
     const confirm = await Swal.fire({
-      title: "Hapus dari Koleksi?",
-      text: `Apakah kamu yakin ingin menghapus "${movie.title}" dari koleksi?`,
+      title: "Delete your collection?",
+      text: `Are you sure you want to delete "${movie.title}" from your collection?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#2C666E",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Ya, Hapus",
-      cancelButtonText: "Batal",
+      confirmButtonText: "Yes, Delete",
+      cancelButtonText: "Cancel",
     });
 
     if (confirm.isConfirmed) {
