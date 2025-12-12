@@ -27,6 +27,13 @@ export default function PaymentsPage() {
 
   useEffect(() => {
     fetchPayments();
+    const interval = setInterval(fetchPayments, 5000);
+    const onFocus = () => fetchPayments();
+    window.addEventListener("focus", onFocus);
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", onFocus);
+    };
   }, []);
 
   return (

@@ -25,7 +25,7 @@ module.exports = class Controller {
 
     static async updateProfile(req, res, next) {
         try {
-            const { id } = req.params;
+            const id = req.user.id;
             const { username, age, preferences, imageUrl } = req.body;
             const profile = await Profile.findOne({ where: { UserId: id } });
             if (!profile) {

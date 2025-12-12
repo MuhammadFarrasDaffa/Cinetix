@@ -1,5 +1,5 @@
 import axios from "axios";
 
 export const http = axios.create({
-  baseURL: "https://myproject.fardaf.web.id",
+  baseURL: "http://localhost:3000",
 });

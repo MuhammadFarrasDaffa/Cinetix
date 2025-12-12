@@ -144,7 +144,12 @@ export default function LoginPage() {
             </div>
           </div>
 
-          <div id="buttonDiv"></div>
+          <div className="flex justify-center mt-2">
+            <div
+              id="buttonDiv"
+              className="inline-block shadow-sm rounded-lg overflow-hidden"
+            ></div>
+          </div>
 
           {error && <div className="text-sm text-red-600">{error}</div>}
 
