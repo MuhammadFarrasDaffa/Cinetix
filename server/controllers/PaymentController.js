@@ -64,11 +64,6 @@ module.exports = class Controller {
                 transactionDetails: JSON.stringify(transaction),
             });
 
-            await Collection.create({
-                UserId: req.user.id,
-                MovieId: movieId,
-            });
-
             res.status(201).json({
                 snapToken: transaction.token,
                 redirectUrl: transaction.redirect_url,
