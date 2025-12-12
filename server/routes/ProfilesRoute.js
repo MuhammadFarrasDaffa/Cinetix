@@ -19,6 +19,6 @@ router.patch(
     profileController.updateProfilePicture
 );
 
-router.put("/:id", authorization, profileController.updateProfile);
+router.put("/", profileController.updateProfile);
 
 module.exports = router;

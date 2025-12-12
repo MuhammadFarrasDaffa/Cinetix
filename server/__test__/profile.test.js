@@ -81,13 +81,13 @@ describe("Profile Routes", () => {
         });
     });
 
-    describe("PUT /profiles/:id", () => {
+    describe("PUT /profiles", () => {
         it("should update profile", async () => {
             mockProfile.findOne.mockResolvedValueOnce({ id: 1 });
             mockProfile.update.mockResolvedValueOnce([1]);
 
             const res = await request(app)
-                .put("/profiles/1")
+                .put("/profiles")
                 .send({ username: "updated" });
 
             expect(res.status).toBe(200);
@@ -98,7 +98,7 @@ describe("Profile Routes", () => {
             mockProfile.findOne.mockResolvedValueOnce(null);
 
             const res = await request(app)
-                .put("/profiles/1")
+                .put("/profiles")
                 .send({ username: "test" });
 
             expect(res.status).toBe(404);
@@ -109,7 +109,7 @@ describe("Profile Routes", () => {
             mockProfile.update.mockRejectedValueOnce(new Error("Error"));
 
             const res = await request(app)
-                .put("/profiles/1")
+                .put("/profiles")
                 .send({ username: "test" });
 
             expect(res.status).toBe(500);

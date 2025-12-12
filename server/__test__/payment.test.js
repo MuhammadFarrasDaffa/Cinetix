@@ -116,12 +116,15 @@ describe("Payment Routes", () => {
                 transaction: {
                     notification: jest.fn().mockResolvedValueOnce({
                         order_id: "ORDER-123",
-                        transaction_status: "settlement",
+                        transaction_status: "capture",
                     }),
                 },
             }));
 
-            mockPayment.update.mockResolvedValueOnce([1]);
+            const mockPaymentObj = { UserId: 1, MovieId: 1 };
+            mockPayment.update.mockResolvedValueOnce([1, [mockPaymentObj]]);
+            mockCollection.findOne.mockResolvedValueOnce(null);
+            mockCollection.create.mockResolvedValueOnce({});
 
             const res = await request(app)
                 .post("/payments/webhook")

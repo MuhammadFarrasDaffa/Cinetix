@@ -131,7 +131,7 @@ export default function ProfilePage() {
     try {
       await http({
         method: "PUT",
-        url: `/profiles/${user.id}`,
+        url: `/profiles`,
         headers: {
           Authorization: `Bearer ${localStorage.getItem("access_token")}`,
           "Content-Type": "application/json",
