@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { http } from "../helpers/http-client";
 
 const movieSlice = createSlice({
     name: 'movie',
@@ -41,9 +41,9 @@ export function fetchMovies() {
 
             dispatch(movieActions.fetchItemsStart());
 
-            const { data } = await axios({
+            const { data } = await http({
                 method: "GET",
-                url: `http://localhost:3000/movies`,
+                url: `/movies`,
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("access_token")}`,
                 }

@@ -3,7 +3,7 @@ const { Profile } = require('../models')
 module.exports = async function authorization(req, res, next) {
     try {
         const profileId = req.user.id
-        const profile = await Profile.findByPk(profileId)
+        const profile = await Profile.findOne({ where: { UserId: profileId } })
 
         if (!profile) {
             throw { name: "Not Found", message: "User not found" }
